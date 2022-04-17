@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Todoey.xcodeproj">
+      location = "self:/Users/sizwek/Documents/Swift Course(s)/iOS Bootcamp/toodooeyApp/Toodooey.xcodeproj">
    </FileRef>
 </Workspace>
