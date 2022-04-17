@@ -1,19 +1,9 @@
-![App Brewery Banner](https://github.com/londonappbrewery/Images/blob/master/AppBreweryBanner.png)
+# Toodooey-App
+This app will allow the user to add items to the Todo List & then further sub-items
+It is based off The App Brewery App: https://github.com/appbrewery/Todoey-iOS13
 
+# Installation
+Once cloned, the app should be accessible via Xcode & running it on iOS Deployment target of 13.0
 
-# Todoey ✓
-
-## Our Goal
-
-The objective of this tutorial is to understand how to save data in iOS. We'll look at various choices and learn to use UserDefaults, Core Data and Realm.
-
-
-## What you will create
-
-A todolist app to keep track of all your tasks.
-
-
->This is a companion project to The App Brewery's Complete iOS Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
-
-![End Banner](https://github.com/londonappbrewery/Images/blob/master/readme-end-banner.png)
-
+# Background
+//TODO
