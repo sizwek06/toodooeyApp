@@ -14,11 +14,10 @@ class TodoListVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
     }
-}
-//MARK: - Tableview Datasource Methods
-extension TodoListVC {
+    
+    //MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -33,6 +32,18 @@ extension TodoListVC {
         return cell
     }
     
+    //MARK: - Table View Delegate and methos
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //print(itemArray[indexPath.row])
+        if (tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark) {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
 }
-
-
