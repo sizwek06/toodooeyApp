@@ -11,6 +11,7 @@ import UIKit
 class TodoListVC: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Defeat Demogorgon"]
+    let userDefaults = UserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,7 @@ class TodoListVC: UITableViewController {
             //the action once the user clicks add item
             
             self.itemArray.append(textField.text!)
+            
             self.tableView.reloadData()
             //reload tableView to show the data once more
         }
