@@ -6,4 +6,6 @@ It is based off The App Brewery App: https://github.com/appbrewery/Todoey-iOS13
 Once cloned, the app should be accessible via Xcode & running it on iOS Deployment target of 13.0
 
 # Background
-//TODO
+In this app lesson:
+
+We will work with the UITableView & the datasource
