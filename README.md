@@ -9,3 +9,4 @@ Once cloned, the app should be accessible via Xcode & running it on iOS Deployme
 In this app lesson:
 
 We will work with the UITableView & the datasource
+We will have a look at Custom Data Models
