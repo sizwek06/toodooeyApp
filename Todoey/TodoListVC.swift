@@ -55,11 +55,11 @@ class TodoListVC: UITableViewController {
         cell.accessoryType = item.done ? .checkmark : .none
         
         //The above is same as the following
-//        if item.done == true{
-//            cell.accessoryType = .checkmark
-//        }else{
-//            cell.accessoryType = .none
-//        }
+        //        if item.done == true{
+        //            cell.accessoryType = .checkmark
+        //        }else{
+        //            cell.accessoryType = .none
+        //        }
         return cell
     }
     
@@ -112,12 +112,24 @@ class TodoListVC: UITableViewController {
         let encoder = PropertyListEncoder()
         
         do {
-        let data = try encoder.encode(itemArray)
+            let data = try encoder.encode(itemArray)
             try data.write(to: dataFilePath!)
         } catch {
-            print("Error occurred \(error)")
+            print("Error occurred Encoding: \(error)")
         }
         self.tableView.reloadData()
         //reload tableView to show the data once more
+    }
+    
+    //MARK: - Load Items
+    func loadItems(){
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error occurred Decoding: \(error)")
+            }
+        }
     }
 }
