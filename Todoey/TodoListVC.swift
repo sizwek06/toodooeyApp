@@ -21,6 +21,8 @@ class TodoListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadItems()
+        
         let newItem = Item()
         newItem.title = "Find Mike"
         newItem.done = true
@@ -70,6 +72,18 @@ class TodoListVC: UITableViewController {
     //MARK: - Table View Delegate and methos
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        //MARK: - Update in CRUD
+        //if we were to update a value to what we'd like
+        //itemArray[indexPath.row].setValue("NewValue", forKey: "title")
+        //since we only manipulating the done = true ? false, we can use the below
+        
+        //MARK: - Delete in CRUD
+        //        context.delete(itemArray[indexPath.row])
+        //        itemArray.remove(at: indexPath.row)
+        //        The lines above remove the item from CoreData & then the array which we use to hold the info
+        //Deleting from array first will cause issues as the indices would disappear - then the coredata request would attempt to delete a non-existent item at index y
+        
+        
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         //The above is same as the following
@@ -84,7 +98,7 @@ class TodoListVC: UITableViewController {
         
     }
     
-    //MARK: - Add Button
+    //MARK: - Add Button - C in CRUD
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -113,7 +127,8 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    //MARK: - Add New Items
+    //MARK: - Add New Items - Kind of C in CRUD but generally used to store context.
+    //All the C_UD use the below to store the manipulations of each
     func saveItems() {
         
         do {
@@ -126,12 +141,12 @@ class TodoListVC: UITableViewController {
         //reload tableView to show the data once more
     }
     
-    //MARK: - Load Items
+    //MARK: - Load Items - R in CRUD
     func loadItems(){
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         do {
             //in this section we'll access the AppDelegate's saveContext method
-           itemArray = try context.fetch(request)
+            itemArray = try context.fetch(request)
         } catch {
             print("Error saving context: \(error)")
         }
