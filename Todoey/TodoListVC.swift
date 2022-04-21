@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListVC: UITableViewController {
     
     var itemArray = [Item]()
     let userDefaults = UserDefaults()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    //The line above creates an object via the singleton of the AppDelegate - then we access the
+    //db in it to write onto it
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,8 +93,10 @@ class TodoListVC: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { [self] (action) in
             //the action once the user clicks add item
-            let addItem = Item()
+            
+            let addItem = Item(context: self.context)
             addItem.title = textField.text!
+            addItem.done = false
             
             self.itemArray.append(addItem)
             
@@ -109,13 +115,12 @@ class TodoListVC: UITableViewController {
     
     //MARK: - Add New Items
     func saveItems() {
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            //in this section we'll access the AppDelegate's saveContext method
+            try context.save()
         } catch {
-            print("Error occurred Encoding: \(error)")
+            print("Error saving context: \(error)")
         }
         self.tableView.reloadData()
         //reload tableView to show the data once more
@@ -123,13 +128,12 @@ class TodoListVC: UITableViewController {
     
     //MARK: - Load Items
     func loadItems(){
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error occurred Decoding: \(error)")
-            }
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            //in this section we'll access the AppDelegate's saveContext method
+           itemArray = try context.fetch(request)
+        } catch {
+            print("Error saving context: \(error)")
         }
     }
 }
