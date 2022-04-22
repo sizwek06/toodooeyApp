@@ -23,21 +23,6 @@ class TodoListVC: UITableViewController {
         
         loadItems()
         
-        let newItem = Item()
-        newItem.title = "Find Mike"
-        newItem.done = true
-        itemArray.append(newItem)
-        
-        let newItem1 = Item()
-        newItem1.title = "Buy Eggos"
-        newItem1.done = false
-        itemArray.append(newItem1)
-        
-        let newItem2 = Item()
-        newItem2.title = "Destroy Demogorgon"
-        newItem2.done = false
-        itemArray.append(newItem2)
-        
         if let items = userDefaults.array(forKey: "ToDoListArray") as? [Item] {
             itemArray = items
         }
@@ -142,13 +127,48 @@ class TodoListVC: UITableViewController {
     }
     
     //MARK: - Load Items - R in CRUD
-    func loadItems(){
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+        //The line above after equals is the default request value whenever it's not added.
+        
         do {
             //in this section we'll access the AppDelegate's saveContext method
             itemArray = try context.fetch(request)
         } catch {
             print("Error saving context: \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+}
+
+//MARK: - Search Bar Delegate
+extension TodoListVC: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        //title contains is like sql like query, see more at realm.io/posts/nspredicate-cheatsheet
+        //the cd is for case & diaretic sensitivity i.e. to ignore it
+        
+        request.predicate = predicate
+        
+        let sortDescriptr = NSSortDescriptor(key: "title", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptr]
+        //the above expects an array of descriptors but we are using one hence the array of one descriptr
+        
+        loadItems(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+        
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+                //No longer have the cursor and/or keyboard displayed
+            }
         }
     }
 }
