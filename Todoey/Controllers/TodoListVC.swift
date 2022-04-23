@@ -54,7 +54,7 @@ class TodoListVC: UITableViewController {
         return cell
     }
     
-    //MARK: - Table View Delegate and methos
+    //MARK: - Table View Delegate and methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //MARK: - Update in CRUD
