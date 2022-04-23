@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2822368D2813A4070000E96E /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2822368C2813A4070000E96E /* CategoryVC.swift */; };
 		28E0A2B9280F94A9006859A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 28E0A2B8280F94A9006859A7 /* README.md */; };
 		28E0A2BF280FA64A006859A7 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 28E0A2BD280FA64A006859A7 /* DataModel.xcdatamodeld */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2822368C2813A4070000E96E /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		28E0A2B8280F94A9006859A7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		28E0A2BE280FA64A006859A7 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		EB2BE4F6239524DB00FB933B /* Toodooey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toodooey.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +61,8 @@
 		28E0A2B0280F7952006859A7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2822368C2813A4070000E96E /* CategoryVC.swift */,
+				EB2BE4FD239524DB00FB933B /* TodoListVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -93,7 +97,6 @@
 				EB2BE4F9239524DB00FB933B /* AppDelegate.swift */,
 				28E0A2B1280F796F006859A7 /* Supporting Files */,
 				28E0A2B0280F7952006859A7 /* Controllers */,
-				EB2BE4FD239524DB00FB933B /* TodoListVC.swift */,
 				28E0A2AF280F7940006859A7 /* Views */,
 				28E0A2AE280F7929006859A7 /* DataModels */,
 				EB2BE502239524DC00FB933B /* Assets.xcassets */,
@@ -176,6 +179,7 @@
 			files = (
 				EB2BE4FE239524DB00FB933B /* TodoListVC.swift in Sources */,
 				28E0A2BF280FA64A006859A7 /* DataModel.xcdatamodeld in Sources */,
+				2822368D2813A4070000E96E /* CategoryVC.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
