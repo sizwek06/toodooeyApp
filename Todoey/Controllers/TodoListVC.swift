@@ -16,12 +16,14 @@ class TodoListVC: UITableViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     //The line above creates an object via the singleton of the AppDelegate - then we access the
     //db in it to write onto it
-    
+    var selectedCategory : Category? {
+        didSet{
+            loadItems()
+        }//needs Google
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadItems()
         
         if let items = userDefaults.array(forKey: "ToDoListArray") as? [Item] {
             itemArray = items
@@ -96,6 +98,7 @@ class TodoListVC: UITableViewController {
             let addItem = Item(context: self.context)
             addItem.title = textField.text!
             addItem.done = false
+            addItem.parentCategory = self.selectedCategory
             
             self.itemArray.append(addItem)
             
@@ -127,8 +130,19 @@ class TodoListVC: UITableViewController {
     }
     
     //MARK: - Load Items - R in CRUD
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
         //The line above after equals is the default request value whenever it's not added.
+        
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+        request.predicate = categoryPredicate
+        }
+        //the above two lines allow us to have two SQL statements so that when we search for an item we get items that match the word AND the relationship
+        //if no relationship exists, still show us the items that match the search
+        //since it's optional as well we have to optionally unwrap it
         
         do {
             //in this section we'll access the AppDelegate's saveContext method
@@ -158,7 +172,7 @@ extension TodoListVC: UISearchBarDelegate {
         request.sortDescriptors = [sortDescriptr]
         //the above expects an array of descriptors but we are using one hence the array of one descriptr
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

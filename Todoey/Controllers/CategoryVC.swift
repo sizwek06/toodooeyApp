@@ -12,6 +12,7 @@ import CoreData
 class CategoryVC: UITableViewController {
     
     var categoriesArray = [Category]()
+
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -82,7 +83,19 @@ class CategoryVC: UITableViewController {
         
         tableView.reloadData()
     }
-}
+
 
 //MARK: - TableView Delegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToItems", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TodoListVC
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categoriesArray[indexPath.row]
+        }//go to the new view, where items belong to the category
+    }
 
+}
