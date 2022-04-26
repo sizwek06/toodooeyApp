@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryVC: UITableViewController {
     
     var categoriesArray = [Category]()
 
+    let realm = try! Realm()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -39,9 +40,11 @@ class CategoryVC: UITableViewController {
     }
     
     //MARK: - Data Manipulation Methods
-    func saveCategories() {
+    func save(category: Category) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print("Error saving category: \(error)")
         }
@@ -56,12 +59,12 @@ class CategoryVC: UITableViewController {
         
         let action = UIAlertAction(title: "Add Category", style: .default) { [self] (action) in
             
-            let addCategory = Category(context: self.context)
+            let addCategory = Category()
             addCategory.name = textField.text!
             
             self.categoriesArray.append(addCategory)
             
-            saveCategories()
+            save(category: addCategory)
         }
         
         alert.addTextField { (alertTextField) in
